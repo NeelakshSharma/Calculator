@@ -38,13 +38,15 @@ class Calculator extends React.Component {
         {
             this.setState({
                 value1:parseFloat(this.state.value1+event.target.value),
-                result: parseFloat(this.state.value1+event.target.value)
+                result: parseFloat(this.state.value1+event.target.value),
+                history: this.state.history+event.target.value,
             });
         }
         if(this.state.operator && this.state.value1)
         {
             this.setState({
-                value2:parseFloat(this.state.value2+event.target.value)
+                value2:parseFloat(this.state.value2+event.target.value),
+                history: this.state.history+event.target.value
             });
         }
     }
@@ -52,7 +54,8 @@ class Calculator extends React.Component {
         if(this.state.value2=="" && !this.state.operator)
         {
             this.setState({
-                operator: event.target.value
+                operator: event.target.value,
+                history: this.state.history+event.target.value
             })
         }
         if((this.state.operator && this.state.value2!="") || event.target.value=='=')
@@ -61,45 +64,50 @@ class Calculator extends React.Component {
             {
                 this.setState({
                     result: parseFloat(this.state.value1)+parseFloat(this.state.value2),
-                    value1: this.state.value1+this.state.value2,
+                    value1: parseFloat(this.state.value1)+parseFloat(this.state.value2),
                     operator: event.target.value=="="?null:event.target.value,
-                    value2: ""
+                    value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)+parseFloat(this.state.value2):this.state.history+""+event.target.value
                 })
             }
             else if(this.state.operator=='-')
             {
                 this.setState({
                     result: parseFloat(this.state.value1)-parseFloat(this.state.value2),
-                    value1: this.state.value1-this.state.value2,
+                    value1: parseFloat(this.state.value1)-parseFloat(this.state.value2),
                     operator: event.target.value=="="?null:event.target.value,
                     value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)-parseFloat(this.state.value2):this.state.history+""+event.target.value
                 })
             }
             else if(this.state.operator=='*')
             {
                 this.setState({
                     result: parseFloat(this.state.value1)*parseFloat(this.state.value2),
-                    value1: this.state.value1-this.state.value2,
+                    value1: parseFloat(this.state.value1)*parseFloat(this.state.value2),
                     operator: event.target.value=="="?null:event.target.value,
                     value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)*parseFloat(this.state.value2):this.state.history+""+event.target.value
                 })
             }
             else if(this.state.operator=='/')
             {
                 this.setState({
                     result: parseFloat(this.state.value1)/parseFloat(this.state.value2),
-                    value1: this.state.value1-this.state.value2,
+                    value1: parseFloat(this.state.value1)/parseFloat(this.state.value2),
                     operator: event.target.value=="="?null:event.target.value,
                     value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)/parseFloat(this.state.value2):this.state.history+""+event.target.value
                 })
             }
             else if(this.state.operator=='^')
             {
                 this.setState({
                     result: Math.pow(parseFloat(this.state.value1),parseFloat(this.state.value2)),
-                    value1: this.state.value1-this.state.value2,
+                    value1: Math.pow(parseFloat(this.state.value1),parseFloat(this.state.value2)),
                     operator: event.target.value=="="?null:event.target.value,
                     value2: "",
+                    history: event.target.value=="="?Math.pow(parseFloat(this.state.value1),parseFloat(this.state.value2)):this.state.history+""+event.target.value
                 })
             }
         }
@@ -110,8 +118,8 @@ class Calculator extends React.Component {
             <div>
                 <h3>My Calculator</h3>
                 <form>  
-                    <h3>{this.state.history}</h3>
-                    <h4>{this.state.result}</h4>
+                    <h4>History: {this.state.history}</h4>
+                    <h3>Result: {this.state.result}</h3>
                     <div>
                         <input type="button" onClick={this.numberClicked} value ="1"/>
                         <input type="button" onClick={this.numberClicked} value ="2"/>

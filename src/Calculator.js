@@ -1,11 +1,63 @@
+import React from 'react';
 
+
+class Calculator extends React.Component {
+
+    constructor()
+    {
+        super({});
+        this.state = {
+            value1:"",
+            value2:"",
+            operator:null,
+            history:"",
+            result:null,
+        }
+        this.numberClicked=this.numberClicked.bind(this);
+        this.clearAll=this.clearAll.bind(this);
+        this.operatorClicked=this.operatorClicked.bind(this);
+        // this.equalClicked=this.equalClicked.bind(this);
+    }
+
+    clearAll()
+    {
+        console.log(this.state.value1);
+        console.log(this.state.value2);
+        this.setState({
+            value1:"",
+            value2:"",
+            operator:null,
+            history:"",
+            result: ""
+        })
+    }
+
+    numberClicked(event)
+    {
+        if(!this.state.operator)
+        {
+            this.setState({
                 value1:parseFloat(this.state.value1+event.target.value),
                 result: parseFloat(this.state.value1+event.target.value),
                 history: this.state.history+event.target.value,
+            });
+        }
+        if(this.state.operator && this.state.value1)
+        {
+            this.setState({
                 value2:parseFloat(this.state.value2+event.target.value),
                 history: this.state.history+event.target.value
+            });
+        }
+    }
+    operatorClicked(event){
+        if(this.state.value2=="" && !this.state.operator)
+        {
+            this.setState({
                 operator: event.target.value,
                 history: this.state.history+event.target.value
+            })
+        }
         if((this.state.operator && this.state.value2!="") || event.target.value=='=')
         {
             if(this.state.operator=='+')
@@ -59,6 +111,20 @@
                 })
             }
         }
+    }
+
+    render() {
+        return ( 
+            <div>
+                <h3>My Calculator</h3>
+                <form>  
+                    <h4>History: {this.state.history}</h4>
+                    <h3>Result: {this.state.result}</h3>
+                    <div>
+                        <input type="button" onClick={this.numberClicked} value ="1"/>
+                        <input type="button" onClick={this.numberClicked} value ="2"/>
+                        <input type="button" onClick={this.numberClicked} value ="3"/>
+                        <input type="button" onClick={this.operatorClicked} value ="+"/>
                     </div>
                     <div>
                         <input type="button" onClick={this.numberClicked} value ="4"/>

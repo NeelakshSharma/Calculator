@@ -1,4 +1,5 @@
 import React from 'react';
+import './Style.css';
 
 
 class Calculator extends React.Component {
@@ -51,6 +52,7 @@ class Calculator extends React.Component {
         }
     }
     operatorClicked(event){
+        
         if(this.state.value2=="" && !this.state.operator)
         {
             this.setState({
@@ -115,34 +117,38 @@ class Calculator extends React.Component {
 
     render() {
         return ( 
-            <div>
-                <h3>My Calculator</h3>
+            <div className="Container">
+                <h3 className = "Heading">My Calculator</h3>
                 <form>  
-                    <h4>History: {this.state.history}</h4>
-                    <h3>Result: {this.state.result}</h3>
                     <div>
-                        <input type="button" onClick={this.numberClicked} value ="1"/>
-                        <input type="button" onClick={this.numberClicked} value ="2"/>
-                        <input type="button" onClick={this.numberClicked} value ="3"/>
-                        <input type="button" onClick={this.operatorClicked} value ="+"/>
+                    <h4 className = "History">History: {this.state.history}</h4>
+                    <h3 className = "Result">Result: {this.state.result}</h3>
+                    </div>    
+                    <div className="Button">
+                    <div>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="1"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="2"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="3"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="+"/>
                     </div>
                     <div>
-                        <input type="button" onClick={this.numberClicked} value ="4"/>
-                        <input type="button" onClick={this.numberClicked} value ="5"/>
-                        <input type="button" onClick={this.numberClicked} value ="6"/>
-                        <input type="button" onClick={this.operatorClicked} value ="-"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="4"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="5"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="6"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="-"/>
                     </div>
                     <div>
-                        <input type="button" onClick={this.numberClicked} value ="7"/>
-                        <input type="button" onClick={this.numberClicked} value ="8"/>
-                        <input type="button" onClick={this.numberClicked} value ="9"/>
-                        <input type="button" onClick={this.operatorClicked} value ="="/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="7"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="8"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="9"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="="/>
                     </div>
                     <div>
-                        <input type="button" onClick ={this.clearAll} value ="C"/>
-                        <input type="button" onClick={this.operatorClicked} value ="/"/>
-                        <input type="button" onClick={this.operatorClicked} value ="*"/>
-                        <input type="button" onClick={this.operatorClicked} value ="^"/>
+                        <input type="button" className = "OperatorButton" onClick ={this.clearAll} value ="C"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="/"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="*"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="^"/>
+                    </div>
                     </div>
                 </form>
             </div>

@@ -1,4 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#Project
+##Calculator
+
+A basic calculator app, with which you can operate on integers and get the result along with the tracking of history.
+This is my first react app, components are basic html and styling in css.
 
 ## Available Scripts
 
@@ -11,6 +15,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
 
 ### `npm test`
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Style.css';
 
 
 class Calculator extends React.Component {
@@ -11,12 +12,12 @@ class Calculator extends React.Component {
             value2:"",
             operator:null,
             history:"",
-            result:0,
+            result:null,
         }
         this.numberClicked=this.numberClicked.bind(this);
         this.clearAll=this.clearAll.bind(this);
         this.operatorClicked=this.operatorClicked.bind(this);
-        this.equalClicked=this.equalClicked.bind(this);
+        // this.equalClicked=this.equalClicked.bind(this);
     }
 
     clearAll()
@@ -27,77 +28,127 @@ class Calculator extends React.Component {
             value1:"",
             value2:"",
             operator:null,
-            history:""
+            history:"",
+            result: ""
         })
     }
 
     numberClicked(event)
     {
-        if(this.state.operator==null)
+        if(!this.state.operator)
         {
             this.setState({
+                value1:parseFloat(this.state.value1+event.target.value),
+                result: parseFloat(this.state.value1+event.target.value),
                 history: this.state.history+event.target.value,
-                value1: parseInt(this.state.history+event.target.value)
             });
-            console.log(this.state.value1)
         }
-        else
+        if(this.state.operator && this.state.value1)
         {
             this.setState({
-                history: this.state.history+event.target.value,
-                value2: parseInt(this.state.value2+event.target.value)
+                value2:parseFloat(this.state.value2+event.target.value),
+                history: this.state.history+event.target.value
             });
-            console.log(this.state.value2)
         }
     }
-
     operatorClicked(event){
-        this.setState({
-            history: this.state.history+event.target.value,
-            operator: event.target.value
-        })
-    }
-
-    equalClicked()
-    {
-        if(this.state.operator=='+')
+        
+        if(this.state.value2=="" && !this.state.operator)
         {
             this.setState({
-                result: parseInt(this.state.value1)+parseInt(this.state.value2)
+                operator: event.target.value,
+                history: this.state.history+event.target.value
             })
+        }
+        if((this.state.operator && this.state.value2!="") || event.target.value=='=')
+        {
+            if(this.state.operator=='+')
+            {
+                this.setState({
+                    result: parseFloat(this.state.value1)+parseFloat(this.state.value2),
+                    value1: parseFloat(this.state.value1)+parseFloat(this.state.value2),
+                    operator: event.target.value=="="?null:event.target.value,
+                    value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)+parseFloat(this.state.value2):this.state.history+""+event.target.value
+                })
+            }
+            else if(this.state.operator=='-')
+            {
+                this.setState({
+                    result: parseFloat(this.state.value1)-parseFloat(this.state.value2),
+                    value1: parseFloat(this.state.value1)-parseFloat(this.state.value2),
+                    operator: event.target.value=="="?null:event.target.value,
+                    value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)-parseFloat(this.state.value2):this.state.history+""+event.target.value
+                })
+            }
+            else if(this.state.operator=='*')
+            {
+                this.setState({
+                    result: parseFloat(this.state.value1)*parseFloat(this.state.value2),
+                    value1: parseFloat(this.state.value1)*parseFloat(this.state.value2),
+                    operator: event.target.value=="="?null:event.target.value,
+                    value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)*parseFloat(this.state.value2):this.state.history+""+event.target.value
+                })
+            }
+            else if(this.state.operator=='/')
+            {
+                this.setState({
+                    result: parseFloat(this.state.value1)/parseFloat(this.state.value2),
+                    value1: parseFloat(this.state.value1)/parseFloat(this.state.value2),
+                    operator: event.target.value=="="?null:event.target.value,
+                    value2: "",
+                    history: event.target.value=="="?parseFloat(this.state.value1)/parseFloat(this.state.value2):this.state.history+""+event.target.value
+                })
+            }
+            else if(this.state.operator=='^')
+            {
+                this.setState({
+                    result: Math.pow(parseFloat(this.state.value1),parseFloat(this.state.value2)),
+                    value1: Math.pow(parseFloat(this.state.value1),parseFloat(this.state.value2)),
+                    operator: event.target.value=="="?null:event.target.value,
+                    value2: "",
+                    history: event.target.value=="="?Math.pow(parseFloat(this.state.value1),parseFloat(this.state.value2)):this.state.history+""+event.target.value
+                })
+            }
         }
     }
 
     render() {
         return ( 
-            <div>
-                <h3>My Calculator</h3>
+            <div className="Container">
+                <h3 className = "Heading">My Calculator</h3>
                 <form>  
-                    <h3>{this.state.history}</h3>
-                    <h4>{this.state.result}</h4>
                     <div>
-                        <input type="button" onClick={this.numberClicked} value ="1"/>
-                        <input type="button" onClick={this.numberClicked} value ="2"/>
-                        <input type="button" onClick={this.numberClicked} value ="3"/>
-                        <input type="button" onClick={this.operatorClicked} value ="+"/>
+                    <h4 className = "History">History: {this.state.history}</h4>
+                    <h3 className = "Result">Result: {this.state.result}</h3>
+                    </div>    
+                    <div className="Button">
+                    <div>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="1"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="2"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="3"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="+"/>
                     </div>
                     <div>
-                        <input type="button" onClick={this.numberClicked} value ="4"/>
-                        <input type="button" onClick={this.numberClicked} value ="5"/>
-                        <input type="button" onClick={this.numberClicked} value ="6"/>
-                        <input type="button" onClick={this.operatorClicked} value ="-"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="4"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="5"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="6"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="-"/>
                     </div>
                     <div>
-                        <input type="button" onClick={this.numberClicked} value ="7"/>
-                        <input type="button" onClick={this.numberClicked} value ="8"/>
-                        <input type="button" onClick={this.numberClicked} value ="9"/>
-                        <input type="button" onClick={this.equalClicked} value ="="/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="7"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="8"/>
+                        <input type="button" className = "NumericButton" onClick={this.numberClicked} value ="9"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="="/>
                     </div>
                     <div>
-                        <input type="button" onClick ={this.clearAll} value ="C"/>
-                        <input type="button" onClick={this.operatorClicked} value ="/"/>
-                        <input type="button" onClick={this.operatorClicked} value ="*"/>
-                        <input type="button" onClick={this.operatorClicked} value ="^"/>
+                        <input type="button" className = "OperatorButton" onClick ={this.clearAll} value ="C"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="/"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="*"/>
+                        <input type="button" className = "OperatorButton" onClick={this.operatorClicked} value ="^"/>
+                    </div>
                     </div>
                 </form>
             </div>

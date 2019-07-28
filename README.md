@@ -1,5 +1,5 @@
-#Project
-##Calculator
+# Project
+## Calculator
 
 A basic calculator app, with which you can operate on integers and get the result along with the tracking of history.
 This is my first react app, components are basic html and styling in css.
